@@ -1,21 +1,52 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="./.sst/platform/config.d.ts" />
+import { SSTConfig } from "sst";
+import { Api, NextjsSite } from "sst/constructs";
 
-export default $config({
-  app(input) {
+export default {
+  config(_input) {
     return {
-      name: "nextjs-starter-bundle",
-      removal: input?.stage === "production" ? "retain" : "remove",
-      protect: ["production"].includes(input?.stage),
-      home: "aws",
-      providers: {
-        aws: {
-          region: "ap-south-1", // Forces Mumbai region
-        },
-      },
+      name: "dr-schandra-app",
+      region: "ap-south-1",
+      profile: "sc-prod",
     };
   },
-  async run() {
-    new sst.aws.Nextjs("NextJS_Starter_Bundle");
+  stacks(app) {
+    app.stack(function Site({ stack }) {
+      
+      // 1. Create the Backend API
+      const api = new Api(stack, "Api", {
+        defaults: {
+          function: {
+            handler: "packages/functions/src/index.handler",
+            environment: {
+                AWS_S3_BUCKET_NAME: "dr-chandra-assets", 
+            },
+            permissions: ["dynamodb", "s3"],
+          },
+        },
+        routes: {
+          "ANY /{proxy+}": "packages/functions/src/index.handler",
+        },
+      });
+
+      // 2. Create the Frontend
+      const site = new NextjsSite(stack, "Site", {
+        path: "packages/client-web",
+        
+        // 👇 DISABLE IMAGE OPTIMIZATION HERE
+        imageOptimization: {
+          staticImageOptimization: false, 
+        },
+        
+        environment: {
+          NEXT_PUBLIC_API_URL: api.url,
+        },
+      });
+
+      // 3. Output
+      stack.addOutputs({
+        ApiEndpoint: api.url,
+        SiteUrl: site.url,
+      });
+    });
   },
-});
+} satisfies SSTConfig;

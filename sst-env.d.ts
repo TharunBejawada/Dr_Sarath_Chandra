@@ -5,7 +5,7 @@
 
 declare module "sst" {
   export interface Resource {
-    "NextJS_Starter_Bundle": {
+    "dr-schandra-app": {
       "type": "sst.aws.Nextjs"
       "url": string
     }

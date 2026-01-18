@@ -1,21 +1,16 @@
 {
-  "name": "nextjs-starter-bundle",
+  "name": "dr-schandra-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
-    "dev": "next dev",
-    "lint": "eslint",
-    "start": "next start"
+    "dev": "sst dev",
+    "build": "sst build",
+    "deploy": "sst deploy",
+    "remove": "sst remove"
   },
-  "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.954.0",
-    "@aws-sdk/lib-dynamodb": "^3.954.0",
-    "next": "16.0.10",
-    "react": "19.2.1",
-    "react-dom": "19.2.1",
-    "sst": "3.17.25"
-  },
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
@@ -24,6 +19,8 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.10",
+    "semver": "^7.7.3",
+    "sst": "^2.43.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
