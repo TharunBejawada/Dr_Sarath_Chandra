@@ -41,6 +41,16 @@ export interface ServiceBenefit {
   description: string;
 }
 
+export interface BacklinkLink {
+  name: string;
+  url: string;
+}
+
+export interface BacklinkSchemaBlock {
+  headline: string;
+  links: BacklinkLink[];
+}
+
 export interface Service {
   serviceId: string;
   heroImage: string;
@@ -82,6 +92,7 @@ export interface Service {
   metaDescription?: string;
   metaKeywords?: string;
   url?: string;
+  backlinkSchema?: BacklinkSchemaBlock[];
   
   enabled: boolean;
   createdAt: string;

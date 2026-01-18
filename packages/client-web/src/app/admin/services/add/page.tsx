@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, Save, Trash2, LayoutList, Activity, Plus, X, UploadCloud, Loader2, Star, HelpCircle } from "lucide-react";
+import { ChevronLeft, Save, Trash2, LayoutList, Activity, Plus, X, UploadCloud, Loader2, Star, HelpCircle, Link } from "lucide-react";
 import RichTextEditor from "../../../../components/admin/ServiceRichTextEditor";
 import { API_URL } from "../../../../config";
 
@@ -125,7 +125,9 @@ export default function AddService() {
     seoTitle: "",
     metaDescription: "",
     metaKeywords: "",
-    url: ""
+    url: "",
+
+    backlinkSchema: [] as { headline: string; links: { name: string; url: string }[] }[]
   });
 
   // --- SUBMIT ---
@@ -143,6 +145,43 @@ export default function AddService() {
     } catch(e) { console.error(e); } 
     finally { setIsSubmitting(false); }
   };
+
+  // --- BACKLINK SCHEMA HANDLERS ---
+const addBacklinkSchemaBlock = () => {
+  setService({
+    ...service,
+    backlinkSchema: [...service.backlinkSchema, { headline: "", links: [{ name: "", url: "" }] }]
+  });
+};
+
+const removeBacklinkSchemaBlock = (index: number) => {
+  const updated = service.backlinkSchema.filter((_, i) => i !== index);
+  setService({ ...service, backlinkSchema: updated });
+};
+
+const updateBacklinkHeadline = (index: number, value: string) => {
+  const updated = [...service.backlinkSchema];
+  updated[index].headline = value;
+  setService({ ...service, backlinkSchema: updated });
+};
+
+const addBacklinkLink = (blockIndex: number) => {
+  const updated = [...service.backlinkSchema];
+  updated[blockIndex].links.push({ name: "", url: "" });
+  setService({ ...service, backlinkSchema: updated });
+};
+
+const removeBacklinkLink = (blockIndex: number, linkIndex: number) => {
+  const updated = [...service.backlinkSchema];
+  updated[blockIndex].links = updated[blockIndex].links.filter((_, i) => i !== linkIndex);
+  setService({ ...service, backlinkSchema: updated });
+};
+
+const updateBacklinkLink = (blockIndex: number, linkIndex: number, field: "name" | "url", value: string) => {
+  const updated = [...service.backlinkSchema];
+  updated[blockIndex].links[linkIndex][field] = value;
+  setService({ ...service, backlinkSchema: updated });
+};
 
   // --- STYLES ---
   const sectionClass = "bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-6 mb-8";
@@ -371,6 +410,104 @@ export default function AddService() {
                     className="mt-4 text-xs bg-slate-800 text-white px-3 py-2 rounded font-bold">+ Add FAQ</button>
                </div>
            </div>
+           {/* 4. Backlink Schema Section */}
+<div className={sectionClass}>
+  <div className="flex justify-between items-center border-b pb-4">
+    <h2 className="font-bold text-lg flex items-center gap-2 text-slate-800">
+      <Link className="w-5 h-5 text-indigo-500" /> Backlink Schema
+    </h2>
+    <button
+      type="button"
+      onClick={addBacklinkSchemaBlock}
+      className="text-xs bg-slate-800 text-white px-3 py-1.5 rounded-md font-bold hover:bg-black flex items-center gap-1"
+    >
+      <Plus className="w-3 h-3" /> Add Schema Block
+    </button>
+  </div>
+
+  {service.backlinkSchema.length === 0 && (
+    <p className="text-sm text-slate-400 italic text-center py-4">
+      No backlink schema blocks added yet.
+    </p>
+  )}
+
+  <div className="space-y-6 mt-4">
+    {service.backlinkSchema.map((block, hIndex) => (
+      <div key={hIndex} className="bg-slate-50 p-6 rounded-xl border border-slate-200 relative">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="font-bold text-slate-700 text-sm uppercase">Schema Block #{hIndex + 1}</h3>
+          <button
+            type="button"
+            onClick={() => removeBacklinkSchemaBlock(hIndex)}
+            className="text-slate-400 hover:text-red-500"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Headline Input */}
+        <div className="mb-4">
+          <label className={labelClass}>Block Headline</label>
+          <input
+            type="text"
+            placeholder="e.g. Related Treatments"
+            value={block.headline}
+            onChange={(e) => updateBacklinkHeadline(hIndex, e.target.value)}
+            className={inputClass}
+          />
+        </div>
+
+        {/* Links List */}
+        <div className="bg-white p-4 rounded-lg border border-slate-200">
+          <label className={`${labelClass} mb-3 block`}>Links</label>
+          
+          <div className="space-y-3">
+            {block.links.map((link, lIndex) => (
+              <div key={lIndex} className="flex flex-col sm:flex-row gap-3 items-end">
+                <div className="flex-1 w-full">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 mb-1 block">Link Name</span>
+                  <input
+                    type="text"
+                    placeholder="Link Name"
+                    value={link.name}
+                    onChange={(e) => updateBacklinkLink(hIndex, lIndex, "name", e.target.value)}
+                    className={inputClass}
+                  />
+                </div>
+                <div className="flex-1 w-full">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 mb-1 block">Destination URL</span>
+                  <input
+                    type="text"
+                    placeholder="https://..."
+                    value={link.url}
+                    onChange={(e) => updateBacklinkLink(hIndex, lIndex, "url", e.target.value)}
+                    className={inputClass}
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => removeBacklinkLink(hIndex, lIndex)}
+                  className="p-2.5 bg-red-50 text-red-500 rounded-lg hover:bg-red-100 transition border border-red-100"
+                  title="Remove Link"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => addBacklinkLink(hIndex)}
+            className="mt-4 text-xs bg-slate-100 text-slate-600 border border-slate-300 px-3 py-2 rounded font-bold hover:bg-slate-200 flex items-center gap-1"
+          >
+            <Plus className="w-3 h-3" /> Add Link Row
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
         </div>
 
         {/* === RIGHT COLUMN (SIDEBAR) === */}

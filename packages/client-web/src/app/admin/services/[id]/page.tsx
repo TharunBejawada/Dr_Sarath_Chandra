@@ -4,7 +4,7 @@ import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import { 
   ChevronLeft, Edit, EyeOff, Eye, Loader2, CheckCircle2, 
-  Activity, LayoutList, HelpCircle, Star, Hash, Globe, ChevronRight 
+  Activity, LayoutList, HelpCircle, Star, Hash, Globe, ChevronRight, Link 
 } from "lucide-react";
 import { API_URL } from "../../../../config";
 
@@ -195,6 +195,40 @@ export default function ViewService({ params }: { params: Promise<{ id: string }
                       ))}
                    </div>
                </div>
+            </div>
+
+            {/* 5. BACKLINK SCHEMA (NEW SECTION) */}
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+               <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2 border-b pb-4">
+                  <Link className="w-5 h-5 text-indigo-500"/> Backlink Schema
+               </h2>
+
+               {(!service.backlinkSchema || service.backlinkSchema.length === 0) ? (
+                   <p className="text-slate-500 italic text-sm">No backlink schema configured.</p>
+               ) : (
+                   <div className="space-y-6">
+                       {service.backlinkSchema.map((block: any, idx: number) => (
+                           <div key={idx} className="bg-slate-50 rounded-xl border border-slate-200 p-6">
+                               <h3 className="font-bold text-slate-800 text-sm uppercase mb-4 border-b border-slate-200 pb-2">
+                                   {block.headline || "Untitled Block"}
+                               </h3>
+                               <div className="space-y-3">
+                                   {block.links?.map((link: any, lIdx: number) => (
+                                       <div key={lIdx} className="flex items-start gap-3 text-sm">
+                                           <div className="min-w-[4px] h-[4px] mt-2 rounded-full bg-indigo-400"></div>
+                                           <div className="flex-1 overflow-hidden">
+                                               <span className="font-semibold text-slate-700 block">{link.name}</span>
+                                               <a href={link.url} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline truncate block w-full">
+                                                   {link.url}
+                                               </a>
+                                           </div>
+                                       </div>
+                                   ))}
+                               </div>
+                           </div>
+                       ))}
+                   </div>
+               )}
             </div>
 
         </div>

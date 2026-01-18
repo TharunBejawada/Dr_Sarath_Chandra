@@ -45,6 +45,12 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/admin/users/page.js"
+    ],
+    "/admin/services/add/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/admin/services/add/page.css",
+      "static/chunks/app/admin/services/add/page.js"
     ]
   }
 }
