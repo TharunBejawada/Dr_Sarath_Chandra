@@ -1,5 +1,5 @@
 import { SSTConfig } from "sst";
-import { Api, NextjsSite } from "sst/constructs";
+import { Api } from "sst/constructs"; 
 
 export default {
   config(_input) {
@@ -12,7 +12,7 @@ export default {
   stacks(app) {
     app.stack(function Site({ stack }) {
       
-      // 1. Create the Backend API
+      // 1. KEEP THE BACKEND API
       const api = new Api(stack, "Api", {
         defaults: {
           function: {
@@ -28,24 +28,19 @@ export default {
         },
       });
 
-      // 2. Create the Frontend
+      // 2. DISABLE THE FRONTEND (Deployment moved to Amplify)
+      /*
       const site = new NextjsSite(stack, "Site", {
         path: "packages/client-web",
-        
-        // 👇 DISABLE IMAGE OPTIMIZATION HERE
-        imageOptimization: {
-          staticImageOptimization: false, 
-        },
-        
         environment: {
           NEXT_PUBLIC_API_URL: api.url,
         },
       });
+      */
 
-      // 3. Output
+      // 3. OUTPUT THE API URL
       stack.addOutputs({
         ApiEndpoint: api.url,
-        SiteUrl: site.url,
       });
     });
   },
