@@ -140,7 +140,7 @@ export default function LatestBlog() {
             viewport={{ once: true }}
           >
             <Link 
-              href="/blogs"
+              href="/blog"
               className="inline-flex items-center gap-2 px-6 py-3 border border-gray-200 rounded-lg text-gray-700 font-semibold hover:border-[#A62B2B] hover:text-[#A62B2B] transition-colors"
             >
               View All Articles <ArrowRight className="w-4 h-4" />
