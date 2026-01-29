@@ -37,7 +37,7 @@ export default function Hero() {
 
           {/* Button 2: Call Now */}
           <Link
-            href="tel:+919876543210"
+            href="tel:+919989925612"
             className="inline-flex items-center justify-center gap-2 bg-white text-[#A62B2B] border-2 border-[#A62B2B] px-5 py-3 sm:px-8 sm:py-4 rounded-md font-semibold text-sm sm:text-lg hover:bg-gray-50 transition shadow-sm whitespace-nowrap"
           >
             <Phone className="w-5 h-5 sm:w-6 sm:h-6" />

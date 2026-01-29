@@ -57,12 +57,12 @@ export default function Services() {
           description: "Diagnostic procedure to visualize blood vessels and chambers of the heart accurately.",
           icon: "stethoscope"
         },
-        {
-          id: "3",
-          title: "Coronary Artery Bypass Grafting (CABG)",
-          description: "Surgical procedure to improve blood flow to the heart by bypassing blocked arteries.",
-          icon: "activity"
-        },
+        // {
+        //   id: "3",
+        //   title: "Coronary Artery Bypass Grafting (CABG)",
+        //   description: "Surgical procedure to improve blood flow to the heart by bypassing blocked arteries.",
+        //   icon: "activity"
+        // },
         {
           id: "4",
           title: "TAVR (Transcatheter Aortic Valve Replacement)",

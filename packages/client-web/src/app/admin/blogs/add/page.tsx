@@ -378,7 +378,7 @@ export default function AddBlog() {
                     <div>
                         <label className="text-xs font-bold text-slate-500 mb-1.5 block">URL SLUG</label>
                         <div className="flex items-center">
-                            <span className="bg-slate-100 border border-r-0 border-slate-200 text-slate-500 px-3 py-3 rounded-l-lg text-sm">/blogs/</span>
+                            <span className="bg-slate-100 border border-r-0 border-slate-200 text-slate-500 px-3 py-3 rounded-l-lg text-sm">/blog/</span>
                             <input 
                                 className={`${inputClass} rounded-l-none`} 
                                 value={blog.url} 

@@ -65,6 +65,32 @@ export const getBlogById = async (req: any, res: any) => {
   }
 };
 
+export const getBlogByURL = async (req: any, res: any) => {
+  try {
+    const { url } = req.params; 
+
+    const result = await db.send(new ScanCommand({
+      TableName: TABLE_NAME_BLOGS,
+      FilterExpression: "#url = :urlVal",
+      ExpressionAttributeNames: {
+        "#url": "url" 
+      },
+      ExpressionAttributeValues: {
+        ":urlVal": url
+      }
+    }));
+
+    if (!result.Items || result.Items.length === 0) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
+
+    res.status(200).json({ Item: result.Items[0] });
+  } catch (error) {
+    console.error("Error fetching blog by URL:", error);
+    res.status(500).json({ error: "Failed to fetch blog" });
+  }
+};
+
 // --- 4. UPDATE BLOG ---
 export const updateBlog = async (req: any, res: any) => {
   try {

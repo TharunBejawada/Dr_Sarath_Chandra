@@ -5,7 +5,7 @@ import multer from "multer";
 import { createUser, getAllUsers } from "./controllers/userController.js";
 import { login } from "./controllers/authController.js";
 import { 
-  addBlog, getAllBlogs, getBlogById, updateBlog, toggleBlogStatus, uploadBlogImage 
+  addBlog, getAllBlogs, getBlogById, getBlogByURL, updateBlog, toggleBlogStatus, uploadBlogImage 
 } from "./controllers/blogController.js";
 import { 
   addService, getAllServices, getServiceById, updateService, toggleServiceStatus, 
@@ -40,6 +40,7 @@ app.post("/api/auth/login", login);
 app.get("/api/blogs/getAllBlogs", getAllBlogs);
 app.post("/api/blogs/addBlog", addBlog);
 app.get("/api/blogs/getBlogbyId/:id", getBlogById);
+app.get("/api/blogs/getBlogByUrl/:url", getBlogByURL);
 app.put("/api/blogs/updateBlog/:id", updateBlog);
 app.put("/api/blogs/:id/toggle", toggleBlogStatus);
 app.post("/api/blogs/uploadblogImage", upload.single("image"), uploadBlogImage);
@@ -51,8 +52,8 @@ app.put("/api/services/updateService/:id", updateService);
 app.put("/api/services/:id/toggle", toggleServiceStatus);
 app.post("/api/services/uploadServiceImage", upload.single("image"), uploadServiceImage);
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server running on http://localhost:${PORT}`);
+// });
 
-// export const handler = serverless(app);
+export const handler = serverless(app);

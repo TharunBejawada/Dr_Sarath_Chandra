@@ -1,5 +1,5 @@
 import { SSTConfig } from "sst";
-import { Api } from "sst/constructs"; 
+import { Api, Table } from "sst/constructs"; 
 
 export default {
   config(_input) {
@@ -11,13 +11,34 @@ export default {
   },
   stacks(app) {
     app.stack(function Site({ stack }) {
+
+      // 1. Create the Forms Table
+      const table = new Table(stack, "Forms", {
+        fields: {
+          formId: "string",
+        },
+        primaryIndex: { partitionKey: "formId" },
+      });
       
-      // 1. KEEP THE BACKEND API
       const api = new Api(stack, "Api", {
+        cors: {
+          allowMethods: ["ANY"],
+          allowHeaders: ["*"],
+          allowOrigins: [
+            "https://pginelectroniccity.com",
+            "https://www.pginelectroniccity.com", 
+            "http://localhost:3000", 
+            "https://main.d2jyfcge0jrs7c.amplifyapp.com"
+          ],
+        },
         defaults: {
           function: {
             handler: "packages/functions/src/index.handler",
+            bind: [table],
             environment: {
+                FORM_TABLE_NAME: table.tableName,
+                GMAIL_USER: "drksaratchandra@gmail.com", 
+                GMAIL_PASS: "karj wepo hjcd yhuq",
                 AWS_S3_BUCKET_NAME: "dr-chandra-assets", 
             },
             permissions: ["dynamodb", "s3"],
@@ -25,6 +46,7 @@ export default {
         },
         routes: {
           "ANY /{proxy+}": "packages/functions/src/index.handler",
+          "POST /api/submit-form": "packages/functions/src/forms.submit",
         },
       });
 

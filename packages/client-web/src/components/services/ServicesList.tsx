@@ -15,12 +15,12 @@ const services = [
     description: "A diagnostic procedure where a thin catheter is inserted through a blood vessel to the heart. Contrast dye is injected to visualize the coronary arteries on X-ray, helping detect blockages, valve problems, or other heart conditions.",
     image: "/service-cath.jpg"
   },
-  {
-    id: 3,
-    title: "Coronary Artery Bypass Grafting (CABG)",
-    description: "An open-heart surgery that creates new pathways for blood to flow around blocked coronary arteries. Healthy blood vessels from other parts of the body are used to bypass the blocked sections, improving blood supply to the heart.",
-    image: "/service-cabg.jpg"
-  },
+  // {
+  //   id: 3,
+  //   title: "Coronary Artery Bypass Grafting (CABG)",
+  //   description: "An open-heart surgery that creates new pathways for blood to flow around blocked coronary arteries. Healthy blood vessels from other parts of the body are used to bypass the blocked sections, improving blood supply to the heart.",
+  //   image: "/service-cabg.jpg"
+  // },
   {
     id: 4,
     title: "Transcatheter Aortic Valve Replacement (TAVR)",

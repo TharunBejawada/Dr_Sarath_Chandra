@@ -3,10 +3,12 @@ import Biography from "../../components/about/Biography";
 import Qualifications from "../../components/about/Qualifications";
 import Awards from "../../components/about/Awards"; 
 import AppointmentSection from "../../components/home/AppointmentSection"; 
+import { Metadata } from "next";
 
-export const metadata = {
-  title: "About Dr. Sarat Chandra | Top Cardiologist Hyderabad",
-  description: "Learn about Dr. K. Sarat Chandra's 40+ years of experience in interventional cardiology.",
+export const metadata: Metadata = {
+  title: "Dr Sarat Chandra | Cardiology & Heart Hospital in SR Nagar & Ameerpet, Hyderabad",
+  description: "Consult Dr. Sarat Chandra, a leading cardiologist in Hyderabad associated with top heart hospitals in SR Nagar and Ameerpet. Expert cardiac diagnosis and advanced treatment.",
+  keywords: ["Dr Sarat Chandra hospitals", "Cardiologist hospital in SR Nagar,Hyderabad", "Heart hospitals in Sr Nagar Hyderabad"],
 };
 
 export default function AboutPage() {

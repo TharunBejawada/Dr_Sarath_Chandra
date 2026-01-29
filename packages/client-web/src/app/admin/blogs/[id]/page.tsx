@@ -268,7 +268,7 @@ export default function ViewBlog({ params }: { params: Promise<{ id: string }> }
                   <div>
                      <p className="text-xs font-bold text-slate-400 mb-1">URL SLUG</p>
                      <p className="text-sm text-blue-600 font-mono bg-blue-50 px-2 py-1 rounded inline-block">
-                       /blogs/{blog.url || "..."}
+                       /blog/{blog.url || "..."}
                      </p>
                   </div>
                   <div>

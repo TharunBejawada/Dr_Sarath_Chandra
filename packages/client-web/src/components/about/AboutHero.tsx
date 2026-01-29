@@ -46,7 +46,7 @@ export default function AboutHero() {
             {/* Badge */}
             <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FEF3C7] text-[#D97706] text-sm font-semibold tracking-wide">
               <Heart className="w-4 h-4 fill-current" />
-              Chief Cardiologist – Jayanthi Hospitals
+              Senior Interventional Cardiologist – Jayanthi Super Specialty Hospital
             </motion.div>
 
             {/* Headings */}

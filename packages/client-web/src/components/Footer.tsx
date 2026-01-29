@@ -101,16 +101,16 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#A62B2B] shrink-0 mt-0.5" />
                 <span className="leading-relaxed">
-                  Jayanthi Hospitals, Secunderabad, <br /> Hyderabad, Telangana 500003
+                  Jayanthi Super Specialty Hospital, <br/> 7-1-621/11A, near UMESH CHANDRA STAUE, Sanjeeva Reddy Nagar Office Area, Sanjeeva Reddy Nagar, <br /> Hyderabad, Telangana 500038
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#A62B2B] shrink-0" />
-                <span>+91 98765 43210</span>
+                <span>+91 9989925612</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#A62B2B] shrink-0" />
-                <span>info@drsaratchandra.com</span>
+                <span>drksaratchandra@gmail.com</span>
               </li>
             </ul>
           </div>

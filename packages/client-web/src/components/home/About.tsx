@@ -41,21 +41,21 @@ export default function About() {
             
             {/* Subheading */}
             <p className="text-[#A62B2B] font-semibold text-lg mb-6 leading-relaxed">
-              Senior Interventional Cardiologist | Chief Cardiologist – Jayanthi Hospitals, Hyderabad
+              Senior Interventional Cardiologist | Chief Cardiologist – Jayanthi Super Specialities Hospital, Hyderabad
             </p>
 
             {/* Body Text */}
             <div className="space-y-4 text-gray-600 leading-relaxed mb-8">
-              <p>
-                Dr. K. Sarat Chandra is a highly respected Senior Interventional Cardiologist with nearly <b>40 years of clinical excellence</b> in diagnosing and treating complex heart conditions. He currently serves as the <b>Chief Interventional Cardiologist at Jayanthi Hospitals, Hyderabad</b>, where he leads advanced cardiac care and life-saving interventions.
-              </p>
-              <p>
-                Renowned for his expertise in <b>coronary angioplasty, heart valve procedures, structural heart interventions, and minimally invasive cardiac therapies</b>, Dr. Sarat Chandra combines global training with cutting-edge technology to deliver safe, patient-focused outcomes.
-              </p>
-              <p>
-                His commitment to <b>clinical precision, preventive cardiology, and ethical care</b> has earned him national and international recognition, making him one of the most trusted names in cardiology in Hyderabad.
-              </p>
-            </div>
+  <p>
+    <b>Dr. K. Sarat Chandra</b> is a highly respected <b>Senior Interventional Cardiologist</b> with nearly <b>40 years of clinical excellence in diagnosing and treating complex heart conditions.</b> He currently serves as the <b>Senior Interventional Cardiologist at <a href="https://jayanthihospitals.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Jayanthi Super Specialities Hospital</a>, Beside Umesh Chandra Statue, S.R Nagar Hyderabad,</b> where he leads advanced cardiac care and life-saving interventions.
+  </p>
+  <p>
+    Renowned for his expertise in <b>coronary angioplasty, heart valve procedures, structural heart interventions, and minimally invasive cardiac therapies</b>, Dr. Sarat Chandra combines global training with cutting-edge technology to deliver safe, patient-focused outcomes.
+  </p>
+  <p>
+    His commitment to <b>clinical precision, preventive cardiology, and ethical care</b> has earned him national and international recognition, making him one of the most <b>trusted names in cardiology in Hyderabad.</b>
+  </p>
+</div>
 
             {/* CTA Button */}
             <Link 
