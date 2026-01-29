@@ -27,6 +27,8 @@ export default {
           allowOrigins: [
             "https://pginelectroniccity.com",
             "https://www.pginelectroniccity.com", 
+            "https://drsaratchandra.in",
+            "https://www.drsaratchandra.in",
             "http://localhost:3000", 
             "https://main.d2jyfcge0jrs7c.amplifyapp.com"
           ],
