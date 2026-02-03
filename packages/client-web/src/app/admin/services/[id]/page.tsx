@@ -260,7 +260,7 @@ export default function ViewService({ params }: { params: Promise<{ id: string }
                   </div>
                   <div>
                      <p className="text-xs font-bold text-slate-400">URL Slug</p>
-                     <p className="font-mono bg-slate-100 px-2 rounded inline-block">/services/{service.url}</p>
+                     <p className="font-mono bg-slate-100 px-2 rounded inline-block">/services{service.url}</p>
                   </div>
                   <div>
                      <p className="text-xs font-bold text-slate-400">Keywords</p>

@@ -14,6 +14,7 @@ export default function Navbar() {
     { name: "Services", href: "/services" },
     { name: "Conditions Treated", href: "/conditions" },
     { name: "Blogs", href: "/blog" },
+    { name: "Patient Feedback", href: "/#testimonials" },
     { name: "Contact Us", href: "/contact" },
   ];
 

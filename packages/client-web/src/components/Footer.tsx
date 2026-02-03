@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
   Heart, 
@@ -6,11 +9,45 @@ import {
   Mail, 
   Facebook, 
   Instagram, 
-  Linkedin, 
   Youtube 
 } from "lucide-react";
+import { API_URL } from "../config"; // Adjust path as needed
+
+// --- TYPES ---
+interface Service {
+  serviceId: string;
+  title: string;
+  url: string;
+}
 
 export default function Footer() {
+  const [services, setServices] = useState<Service[]>([]);
+
+  // Configuration for Social Links
+  const socialLinks = [
+    { icon: Facebook, href: "https://www.facebook.com/drksaratchandra/" },
+    { icon: Instagram, href: "https://www.instagram.com/drksaratchandra/" },
+    { icon: Youtube, href: "https://www.youtube.com/channel/UCr_fYkZiUmig-MCHCjFZMcA" },
+  ];
+
+  // --- FETCH SERVICES ---
+  useEffect(() => {
+    async function fetchServices() {
+      try {
+        const res = await fetch(`${API_URL}/api/services/getAllServices`);
+        if (res.ok) {
+          const data = await res.json();
+          // Handle API response structure (Items array vs direct array)
+          const list = data.Items || (Array.isArray(data) ? data : []);
+          setServices(list);
+        }
+      } catch (error) {
+        console.error("Footer: Failed to fetch services", error);
+      }
+    }
+    fetchServices();
+  }, []);
+
   return (
     <footer className="bg-[#1A202C] text-gray-300 pt-16 pb-8">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
@@ -40,13 +77,15 @@ export default function Footer() {
 
             {/* Social Icons */}
             <div className="flex gap-4">
-              {[Facebook, Instagram, Youtube, Linkedin].map((Icon, i) => (
+              {socialLinks.map((social, i) => (
                 <a 
                   key={i} 
-                  href="#" 
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#A62B2B] hover:text-white transition duration-300"
                 >
-                  <Icon className="w-5 h-5" />
+                  <social.icon className="w-5 h-5" />
                 </a>
               ))}
             </div>
@@ -73,24 +112,35 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* COLUMN 3: Services */}
+          {/* COLUMN 3: Services (Dynamic) */}
           <div>
             <h3 className="text-white font-serif text-lg font-semibold mb-6">Services</h3>
             <ul className="space-y-4 text-sm">
-              {[
-                "Coronary Angioplasty",
-                "Heart Valve Procedures",
-                "Pacemaker Implantation",
-                "Cardiac Catheterisation",
-                "TAVR Procedures",
-                "Cardiac Ablation"
-              ].map((item) => (
-                <li key={item}>
-                  <Link href="/services" className="hover:text-[#A62B2B] transition-colors">
-                    {item}
+              {services.length > 0 ? (
+                // Show top 6 services dynamically
+                services.slice(0, 6).map((service) => (
+                  <li key={service.serviceId}>
+                    <Link 
+                      href={service.url ? `/services${service.url}` : "#"} 
+                      className="hover:text-[#A62B2B] transition-colors line-clamp-1"
+                    >
+                      {service.title}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                // Fallback / Loading State (Optional: Keep it empty or show skeleton)
+                <li className="text-gray-500 italic">Loading services...</li>
+              )}
+              
+              {/* 'View All' Link if there are many services */}
+              {services.length > 6 && (
+                <li>
+                  <Link href="/services" className="text-[#A62B2B] font-semibold hover:underline mt-2 inline-block">
+                    View All Services →
                   </Link>
                 </li>
-              ))}
+              )}
             </ul>
           </div>
 

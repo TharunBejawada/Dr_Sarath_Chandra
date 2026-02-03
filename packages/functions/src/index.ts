@@ -8,9 +8,12 @@ import {
   addBlog, getAllBlogs, getBlogById, getBlogByURL, updateBlog, toggleBlogStatus, uploadBlogImage 
 } from "./controllers/blogController.js";
 import { 
-  addService, getAllServices, getServiceById, updateService, toggleServiceStatus, 
+  addService, getAllServices, getServiceById, getServiceByURL, updateService, toggleServiceStatus, 
   uploadServiceImage
 } from "./controllers/serviceController.js";
+import { 
+  addTestimonial, getAllTestimonials, deleteTestimonial 
+} from "./controllers/testimonialsController.js";
 import serverless from "serverless-http";
 
 dotenv.config();
@@ -48,9 +51,14 @@ app.post("/api/blogs/uploadblogImage", upload.single("image"), uploadBlogImage);
 app.get("/api/services/getAllServices", getAllServices);
 app.post("/api/services/addService", addService);
 app.get("/api/services/getServiceById/:id", getServiceById);
+app.get("/api/services/getServiceByUrl/:url", getServiceByURL);
 app.put("/api/services/updateService/:id", updateService);
 app.put("/api/services/:id/toggle", toggleServiceStatus);
 app.post("/api/services/uploadServiceImage", upload.single("image"), uploadServiceImage);
+
+app.get("/api/testimonials", getAllTestimonials);
+app.post("/api/testimonials", addTestimonial);
+app.delete("/api/testimonials/:id", deleteTestimonial);
 
 // app.listen(PORT, () => {
 //   console.log(`Server running on http://localhost:${PORT}`);

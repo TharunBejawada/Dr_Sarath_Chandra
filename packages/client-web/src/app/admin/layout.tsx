@@ -52,7 +52,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
     { name: "Services", href: "/admin/services", icon: Activity },
     { name: "Blog Posts", href: "/admin/blogs", icon: FileText },
-    // { name: "Media Library", href: "/admin/media", icon: ImageIcon },
+    { name: "Patient Testimonials", href: "/admin/testimonials", icon: ImageIcon },
     { name: "Users", href: "/admin/users", icon: Users }
     // { name: "Settings", href: "/admin/settings", icon: Settings },
   ];

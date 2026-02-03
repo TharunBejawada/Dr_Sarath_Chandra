@@ -1,142 +1,85 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { 
-  Heart, 
-  Stethoscope, 
-  Activity, 
-  Zap, 
-  Settings, 
-  Disc, 
-  Waves, 
-  ShieldAlert 
-} from "lucide-react";
+import Link from "next/link";
+import { motion, useAnimationControls } from "framer-motion";
+import { Activity, ArrowRight } from "lucide-react";
+import { API_URL } from "../../config";
 
-// 1. Define the Data Shape (matches your future DB Schema)
-type ServiceItem = {
-  id: string;
+// --- TYPES ---
+interface Service {
+  serviceId: string;
   title: string;
   description: string;
-  icon: string; // We store icon names as strings in DB
+  heroImage: string;
+  url: string;
+  badge?: string; // Optional: if your API has a badge field, otherwise we use a default
+}
+
+// --- UTILS ---
+const stripHtml = (html: string) => {
+  if (typeof window === "undefined") return "";
+  const tmp = document.createElement("DIV");
+  tmp.innerHTML = html;
+  return (tmp.textContent || tmp.innerText || "").substring(0, 120) + "...";
 };
 
-// 2. Icon Mapper (Maps DB string -> Lucide Component)
-const iconMap: Record<string, any> = {
-  "heart": Heart,
-  "stethoscope": Stethoscope,
-  "activity": Activity,
-  "zap": Zap,
-  "settings": Settings,
-  "disc": Disc,
-  "waves": Waves,
-  "shield": ShieldAlert,
-};
-
-export default function Services() {
-  const [services, setServices] = useState<ServiceItem[]>([]);
+export default function HomeServicesMarquee() {
+  const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // Animation Controls for Pause on Hover
+  const controls = useAnimationControls();
 
-  // 3. Simulate Backend Fetch
   useEffect(() => {
-    // In the future, this will be: const res = await fetch('/api/services');
-    const fetchServices = async () => {
-      // Simulating network delay
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      
-      setServices([
-        {
-          id: "1",
-          title: "Coronary Angioplasty & Stenting (PCI)",
-          description: "Minimally invasive procedure to open blocked coronary arteries and restore blood flow to the heart.",
-          icon: "heart"
-        },
-        {
-          id: "2",
-          title: "Cardiac Catheterisation & Angiogram",
-          description: "Diagnostic procedure to visualize blood vessels and chambers of the heart accurately.",
-          icon: "stethoscope"
-        },
-        // {
-        //   id: "3",
-        //   title: "Coronary Artery Bypass Grafting (CABG)",
-        //   description: "Surgical procedure to improve blood flow to the heart by bypassing blocked arteries.",
-        //   icon: "activity"
-        // },
-        {
-          id: "4",
-          title: "TAVR (Transcatheter Aortic Valve Replacement)",
-          description: "Minimally invasive valve replacement for patients with severe aortic stenosis.",
-          icon: "settings"
-        },
-        {
-          id: "5",
-          title: "Mitral Valve Repair / Replacement",
-          description: "Advanced surgical and transcatheter solutions including MitraClip for mitral valve disease.",
-          icon: "disc"
-        },
-        {
-          id: "6",
-          title: "Pacemaker & ICD / CRT Implantation",
-          description: "Device therapy for heart rhythm disorders and heart failure management.",
-          icon: "zap"
-        },
-        {
-          id: "7",
-          title: "Carotid Artery Angioplasty & Stenting",
-          description: "Treatment for carotid artery disease to prevent stroke and improve blood flow.",
-          icon: "waves"
-        },
-        {
-          id: "8",
-          title: "Aortic Aneurysm Repair",
-          description: "Endovascular and surgical repair of aortic aneurysms to prevent rupture.",
-          icon: "shield"
-        },
-        {
-          id: "9",
-          title: "Electrophysiology Study & Cardiac Ablation",
-          description: "Treatment that uses energy (heat/cold) delivered via catheters to destroy the small areas of heart tissue causing the arrhythmia, effectively curing it",
-          icon: "waves"
-        },
-        {
-          id: "10",
-          title: "Device Closure for Congenital Heart Defects (ASD / VSD / PDA)",
-          description: "Minimally invasive closure of atrial and ventricular septal defects and patent ductus arteriosus.",
-          icon: "shield"
-        }
-      ]);
-      setLoading(false);
-    };
-
+    async function fetchServices() {
+      try {
+        const res = await fetch(`${API_URL}/api/services/getAllServices`);
+        const data = await res.json();
+        // Handle { Items: [...] } or direct array
+        const list = data.Items || (Array.isArray(data) ? data : []);
+        setServices(list);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
     fetchServices();
   }, []);
 
-  // Animation Variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15 // Delays each card by 0.15s
-      }
+  // Start animation when services are loaded
+  useEffect(() => {
+    if (services.length > 0) {
+      startAnimation();
     }
+  }, [services]);
+
+  const startAnimation = () => {
+    controls.start({
+      x: "-50%",
+      transition: {
+        ease: "linear",
+        duration: 50, // Slower speed (higher number = slower)
+        repeat: Infinity,
+      },
+    });
   };
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }
+  const stopAnimation = () => {
+    controls.stop();
   };
+
+  if (loading) return null;
+
+  // Duplicate list for seamless infinite scroll
+  const marqueeList = [...services, ...services]; 
 
   return (
-    <section className="py-24 bg-[#F9FAFB]">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
+    <section className="py-24 bg-[#F9FAFB] overflow-hidden">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 mb-12">
         
-        {/* Header Section */}
+        {/* --- ORIGINAL HEADER --- */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
@@ -168,52 +111,88 @@ export default function Services() {
             Comprehensive cardiac care using the latest technology and techniques for optimal patient outcomes.
           </motion.p>
         </div>
-
-        {/* Grid Section */}
-        {loading ? (
-          // Simple Loading State
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1,2,3,4].map(i => (
-              <div key={i} className="h-64 bg-gray-200 rounded-2xl animate-pulse"></div>
-            ))}
-          </div>
-        ) : (
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {services.map((service) => {
-              const IconComponent = iconMap[service.icon] || Activity;
-              
-              return (
-                <motion.div
-                  key={service.id}
-                  variants={cardVariants}
-                  whileHover={{ y: -10, transition: { duration: 0.2 } }}
-                  className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:shadow-red-50/50 hover:border-red-100 transition-all duration-300 group cursor-default"
-                >
-                  {/* Icon Box */}
-                  <div className="w-14 h-14 rounded-xl bg-red-50 flex items-center justify-center text-[#A62B2B] mb-6 group-hover:bg-[#A62B2B] group-hover:text-white transition-colors duration-300">
-                    <IconComponent className="w-7 h-7" />
-                  </div>
-                  
-                  {/* Content */}
-                  <h3 className="font-serif text-xl font-bold text-gray-900 mb-3 group-hover:text-[#A62B2B] transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">
-                    {service.description}
-                  </p>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        )}
-
       </div>
+
+      {/* --- INFINITE SCROLL TRACK --- */}
+      <div 
+        className="relative w-full"
+        onMouseEnter={stopAnimation} 
+        onMouseLeave={startAnimation}
+      >
+        
+        {/* Gradient Masks (Fade effect on edges) */}
+        <div className="absolute left-0 top-0 bottom-0 w-8 md:w-32 bg-gradient-to-r from-[#F9FAFB] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-8 md:w-32 bg-gradient-to-l from-[#F9FAFB] to-transparent z-10 pointer-events-none" />
+
+        <div className="flex overflow-hidden">
+          <motion.div
+            className="flex gap-8 px-4" // Increased gap
+            animate={controls}
+            initial={{ x: "0%" }}
+          >
+            {marqueeList.map((service, index) => (
+              <Link 
+                key={`${service.serviceId}-${index}`} 
+                href={service.url ? `/services${service.url}` : "#"}
+                className="relative flex-shrink-0 w-[320px] md:w-[450px] group block h-full"
+              >
+                <div className="bg-white rounded-3xl shadow-sm border border-gray-100 hover:shadow-2xl hover:border-red-100 transition-all duration-500 overflow-hidden h-full flex flex-col">
+                  
+                  {/* Image Container (Bigger & Cinematic) */}
+                  <div className="h-56 relative overflow-hidden">
+                    <img 
+                      src={service.heroImage || "https://placehold.co/600x400?text=Heart+Care"} 
+                      alt={service.title}
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                      onError={(e) => (e.target as HTMLImageElement).src = "https://placehold.co/600x400?text=Image+Unavailable"}
+                    />
+                    
+                    {/* Dark Gradient Overlay for text contrast if needed */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                    {/* Floating Badge (Top Right) */}
+                    <div className="absolute top-4 right-4 z-20">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/95 backdrop-blur-sm shadow-md text-[#A62B2B] text-xs font-bold uppercase tracking-wider border border-red-50">
+                        <Activity className="w-3 h-3 mr-1" />
+                        {service.badge || "Cardiac Care"}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Content Body */}
+                  <div className="p-8 flex flex-col flex-grow">
+                    <h3 className="font-serif text-2xl font-bold text-gray-900 mb-3 group-hover:text-[#A62B2B] transition-colors line-clamp-2">
+                      {service.title}
+                    </h3>
+                    
+                    <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-6 flex-grow">
+                      {stripHtml(service.description)}
+                    </p>
+
+                    {/* 'Learn More' - Fades in/slides up on hover */}
+                    <div className="flex items-center text-[#A62B2B] font-bold text-sm tracking-wide uppercase transform translate-y-2 opacity-80 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                      <span className="mr-2 underline decoration-transparent group-hover:decoration-[#A62B2B] transition-all">Learn More</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Mobile "View All" Button */}
+      <div className="mt-12 flex justify-center md:hidden">
+         <Link 
+            href="/services" 
+            className="flex items-center gap-2 text-[#A62B2B] font-bold text-sm border border-red-100 px-8 py-3 rounded-full hover:bg-red-50 transition shadow-sm"
+          >
+            View All Procedures
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+      </div>
+
     </section>
   );
 }

@@ -56,6 +56,36 @@ export const getServiceById = async (req: any, res: any) => {
   }
 };
 
+export const getServiceByURL = async (req: any, res: any) => {
+  try {
+    let { url } = req.params; 
+
+    if (!url.startsWith('/')) {
+      url = `/${url}`;
+    }
+
+    const result = await db.send(new ScanCommand({
+      TableName: TABLE_NAME_SERVICES,
+      FilterExpression: "#url = :urlVal",
+      ExpressionAttributeNames: {
+        "#url": "url" 
+      },
+      ExpressionAttributeValues: {
+        ":urlVal": url
+      }
+    }));
+
+    if (!result.Items || result.Items.length === 0) {
+      return res.status(404).json({ error: "Service not found" });
+    }
+
+    res.status(200).json({ Item: result.Items[0] });
+  } catch (error) {
+    console.error("Error fetching service by URL:", error);
+    res.status(500).json({ error: "Failed to fetch service" });
+  }
+};
+
 // 4. UPDATE
 export const updateService = async (req: any, res: any) => {
   try {

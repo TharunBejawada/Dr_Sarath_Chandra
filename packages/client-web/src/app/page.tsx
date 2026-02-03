@@ -7,6 +7,7 @@ import Awards from "../components/home/Awards";
 import Testimonials from "../components/home/Testimonials";
 import LatestBlog from "../components/home/LatestBlog";
 import { Metadata } from "next";
+import HomeTestimonials from "../components/home/HomeTestimonials";
 
 export const metadata: Metadata = {
   title: "Dr Sarat Chandra | Best Cardiologist & Heart Specialist in Hyderabad",
@@ -35,6 +36,7 @@ export default function HomePage() {
        <Conditions />
        <Awards />
        <Testimonials />
+       <HomeTestimonials />
        <LatestBlog />
     </div>
   );
