@@ -5,6 +5,7 @@ import Script from "next/script";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer"; 
 import FloatingContact from "../components/FloatingContact";
+import CanonicalTag from "../components/CanonicalTag";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <CanonicalTag />
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

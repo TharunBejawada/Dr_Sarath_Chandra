@@ -3,7 +3,7 @@ import { API_URL } from '../config';
 
 const BASE_URL = 'https://drsaratchandra.in';
 
-export const revalidate = 86400;
+export const dynamic = 'force-dynamic';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   
@@ -50,7 +50,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // --- B. Fetch Dynamic Services ---
   let serviceRoutes: MetadataRoute.Sitemap = [];
   try {
-    const res = await fetch(`${API_URL}/api/services/getAllServices`);
+    const res = await fetch(`${API_URL}/api/services/getAllServices`, { cache: 'no-store' });
     const data = await res.json();
     const services = data.Items || (Array.isArray(data) ? data : []);
 
@@ -72,7 +72,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // --- C. Fetch Dynamic Blogs ---
   let blogRoutes: MetadataRoute.Sitemap = [];
   try {
-    const res = await fetch(`${API_URL}/api/blogs/getAllBlogs`);
+    const res = await fetch(`${API_URL}/api/blogs/getAllBlogs`, { cache: 'no-store' });
     const data = await res.json();
     // Adjust based on your blog API response structure
     const blogs = data.Items || (Array.isArray(data) ? data : []);
