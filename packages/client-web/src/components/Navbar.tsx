@@ -56,7 +56,7 @@ export default function Navbar() {
         {/* RIGHT: Call Button (Visible on Tablet+, Hidden on small Mobile) */}
         <div className="hidden md:flex items-center">
           <Link
-            href="tel:+919989925612"
+            href="tel:+917729910108"
             className="flex items-center gap-2 bg-[#A62B2B] text-white px-6 py-3 rounded-md font-semibold hover:bg-[#8E2424] transition shadow-md hover:shadow-lg"
           >
             <Phone className="w-5 h-5 fill-current" />
@@ -99,12 +99,12 @@ export default function Navbar() {
 
               {/* Mobile Call Button (Only visible here if screen is small) */}
               <Link
-                href="tel:+919989925612"
+                href="tel:+917729910108"
                 onClick={() => setIsOpen(false)}
                 className="mt-4 flex items-center justify-center gap-2 bg-[#A62B2B] text-white px-6 py-4 rounded-md font-bold text-lg hover:bg-[#8E2424] transition shadow-md"
               >
                 <Phone className="w-5 h-5 fill-current" />
-                <span>Call +91 99899 25612</span>
+                <span>Call +91 77299 10108</span>
               </Link>
             </div>
           </motion.div>

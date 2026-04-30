@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { 
   Phone, 
@@ -20,6 +21,7 @@ interface ContactSectionProps {
 }
 
 export default function ContactSection({ pageName = "Contact Page" }: ContactSectionProps) {
+  const router = useRouter();
   
   // --- STATE MANAGEMENT ---
   const [formData, setFormData] = useState({
@@ -49,6 +51,7 @@ export default function ContactSection({ pageName = "Contact Page" }: ContactSec
       if (res.ok) {
         setStatus("success");
         setFormData({ name: "", mobile: "", email: "", message: "" }); // Reset form data
+        router.push("/thank-you");
       } else {
         setStatus("error");
       }
@@ -62,9 +65,9 @@ export default function ContactSection({ pageName = "Contact Page" }: ContactSec
     {
       icon: Phone,
       title: "Phone Number",
-      value: "+91 9989925612",
+      value: "+91 7729910108",
       sub: "Mon-Sat 9am to 6pm",
-      action: "tel:+919989925612"
+      action: "tel:+917729910108"
     },
     {
       icon: Mail,
@@ -217,7 +220,7 @@ export default function ContactSection({ pageName = "Contact Page" }: ContactSec
                       <input 
                         type="tel" 
                         required
-                        placeholder="+91 9989925612"
+                        placeholder="+91 7729910108"
                         value={formData.mobile}
                         onChange={(e) => setFormData({...formData, mobile: e.target.value})}
                         className={inputClasses}

@@ -11,9 +11,11 @@ import {
   Loader2, 
   CheckCircle2 
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 export default function AppointmentSection() {
+  const router = useRouter();
   
   // --- STATE ---
   const [formData, setFormData] = useState({
@@ -43,6 +45,7 @@ export default function AppointmentSection() {
       if (res.ok) {
         setStatus("success");
         setFormData({ name: "", mobile: "", email: "", message: "" }); // Reset form
+        router.push("/thank-you");
       } else {
         setStatus("error");
       }
@@ -90,7 +93,7 @@ export default function AppointmentSection() {
                 </div>
                 <div>
                   <p className="text-red-200 text-sm">Call Us</p>
-                  <p className="text-xl font-bold">+91 9989925612</p>
+                  <p className="text-xl font-bold">+91 7729910108</p>
                 </div>
               </div>
 

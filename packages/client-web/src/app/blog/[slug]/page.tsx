@@ -274,8 +274,8 @@ export default function SingleBlogPage({ params }: { params: Promise<{ slug: str
 
                 <div className="mt-6 pt-6 border-t border-gray-700/50 relative z-10">
                   <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">For Emergencies</p>
-                  <a href="tel:+919989925612" className="flex items-center gap-2 font-bold text-lg hover:text-[#A62B2B] transition">
-                    <Phone className="w-5 h-5" /> +91 99899 25612
+                  <a href="tel:+917729910108" className="flex items-center gap-2 font-bold text-lg hover:text-[#A62B2B] transition">
+                    <Phone className="w-5 h-5" /> +91 77299 10108
                   </a>
                 </div>
               </motion.div>

@@ -602,8 +602,8 @@ export default function ServiceDetail() {
             />
             
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-               <Link href="tel:+919989925612" className="flex items-center justify-center gap-2 px-8 py-4 bg-[#F97316] hover:bg-[#EA580C] text-white font-bold rounded-lg transition-all shadow-lg hover:shadow-xl hover:-translate-y-1">
-                 <Phone className="w-5 h-5" /> Call +91 99899 25612
+               <Link href="tel:+917729910108" className="flex items-center justify-center gap-2 px-8 py-4 bg-[#F97316] hover:bg-[#EA580C] text-white font-bold rounded-lg transition-all shadow-lg hover:shadow-xl hover:-translate-y-1">
+                 <Phone className="w-5 h-5" /> Call +91 77299 10108
                </Link>
                <Link href="/contact" className="flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold rounded-lg transition-all">
                  <Calendar className="w-5 h-5" /> Schedule Online
@@ -614,7 +614,7 @@ export default function ServiceDetail() {
               <div className="bg-white/5 p-6 rounded-xl backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors">
                  <Phone className="w-8 h-8 text-[#F97316] mb-4" />
                  <h4 className="font-bold text-lg mb-1">Call Us</h4>
-                 <p className="text-teal-200">+91 99899 25612</p>
+                 <p className="text-teal-200">+91 77299 10108</p>
               </div>
               <div className="bg-white/5 p-6 rounded-xl backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors">
                  <Clock className="w-8 h-8 text-[#F97316] mb-4" />

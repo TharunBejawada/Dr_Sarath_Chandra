@@ -13,7 +13,7 @@ export default function FloatingContact() {
     >
       {/* WhatsApp Button */}
       <motion.a
-        href="https://wa.me/919989925612" // Replace with actual WhatsApp link
+        href="https://wa.me/917729910108" // Replace with actual WhatsApp link
         target="_blank"
         rel="noopener noreferrer"
         initial={{ scale: 0 }}
@@ -28,7 +28,7 @@ export default function FloatingContact() {
 
       {/* Call Button */}
       <motion.a
-        href="tel:+919989925612"
+        href="tel:+917729910108"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.1 }}
